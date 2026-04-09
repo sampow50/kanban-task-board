@@ -34,7 +34,6 @@ function App() {
     init();
   }, []);
 
-  // ✅ FIXED: fetchTasks wrapped in useCallback
   const fetchTasks = useCallback(async () => {
     if (!user) return;
 
@@ -46,7 +45,7 @@ function App() {
     setTasks(data || []);
   }, [user]);
 
-  // ✅ FIXED: proper dependency
+
   useEffect(() => {
     fetchTasks();
   }, [fetchTasks]);
