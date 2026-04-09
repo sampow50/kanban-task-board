@@ -5,9 +5,11 @@ function TaskModal({ task, user, onClose }) {
   const [comments, setComments] = useState([]);
   const [newComment, setNewComment] = useState("");
 
+  // ✅ FIX: silence ESLint + keep behavior correct
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
     fetchComments();
-  }, []);
+  }, [task.id]);
 
   const fetchComments = async () => {
     const { data } = await supabase
@@ -61,13 +63,13 @@ function TaskModal({ task, user, onClose }) {
         <h4>Comments</h4>
 
         {comments.map((c) => (
-            <div key={c.id} style={{ marginBottom: 10 }}>
-                <p style={{ margin: 0 }}>{c.content}</p>
-                <small style={{ color: "#666" }}>
-                {new Date(c.created_at).toLocaleString()}
-                </small>
-            </div>
-            ))}
+          <div key={c.id} style={{ marginBottom: 10 }}>
+            <p style={{ margin: 0 }}>{c.content}</p>
+            <small style={{ color: "#666" }}>
+              {new Date(c.created_at).toLocaleString()}
+            </small>
+          </div>
+        ))}
 
         <input
           value={newComment}
