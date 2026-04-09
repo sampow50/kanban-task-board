@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import { supabase } from "../supabaseClient";
 
 function TaskModal({ task, user, onClose }) {
@@ -6,11 +6,9 @@ function TaskModal({ task, user, onClose }) {
   const [newComment, setNewComment] = useState("");
 
 
-  useEffect(() => {
-    fetchComments();
-  }, [task.id]);
+  const fetchComments = useCallback(async () => {
+    if (!task?.id) return;
 
-  const fetchComments = async () => {
     const { data } = await supabase
       .from("comments")
       .select("*")
@@ -18,7 +16,12 @@ function TaskModal({ task, user, onClose }) {
       .order("created_at");
 
     setComments(data || []);
-  };
+  }, [task?.id]);
+
+
+  useEffect(() => {
+    fetchComments();
+  }, [fetchComments]);
 
   const addComment = async () => {
     if (!newComment.trim()) return;
@@ -47,37 +50,39 @@ function TaskModal({ task, user, onClose }) {
       <div
         onClick={(e) => e.stopPropagation()}
         style={{
-          position: "absolute",
-          right: 0,
-          width: 350,
-          height: "100%",
           background: "white",
-          padding: 20
+          padding: 20,
+          margin: "100px auto",
+          width: 400,
+          borderRadius: 8
         }}
       >
         <h2>{task.title}</h2>
-
         <p>{task.description}</p>
 
-        <h4>Comments</h4>
-
-        {comments.map((c) => (
-          <div key={c.id} style={{ marginBottom: 10 }}>
-            <p style={{ margin: 0 }}>{c.content}</p>
-            <small style={{ color: "#666" }}>
-              {new Date(c.created_at).toLocaleString()}
-            </small>
-          </div>
-        ))}
+        <h3>Comments</h3>
+        <div style={{ maxHeight: 200, overflowY: "auto" }}>
+          {comments.map((c) => (
+            <div key={c.id} style={{ marginBottom: 8 }}>
+              <strong>{c.user_id}</strong>: {c.content}
+            </div>
+          ))}
+        </div>
 
         <input
+          placeholder="Add a comment..."
           value={newComment}
           onChange={(e) => setNewComment(e.target.value)}
-          placeholder="Add comment"
+          style={{ width: "100%", marginTop: 10 }}
         />
 
-        <button onClick={addComment}>Add</button>
-        <button onClick={onClose}>Close</button>
+        <button onClick={addComment} style={{ marginTop: 10 }}>
+          Add Comment
+        </button>
+
+        <button onClick={onClose} style={{ marginTop: 10, marginLeft: 10 }}>
+          Close
+        </button>
       </div>
     </div>
   );
