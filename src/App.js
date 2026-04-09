@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import { supabase } from "./supabaseClient";
 import { DndContext, closestCenter } from "@dnd-kit/core";
 import Column from "./components/Column";
@@ -25,6 +25,7 @@ function App() {
   const [search, setSearch] = useState("");
   const [selectedTask, setSelectedTask] = useState(null);
 
+  // 🔐 Authenticate user
   useEffect(() => {
     const init = async () => {
       const { data } = await supabase.auth.signInAnonymously();
@@ -33,18 +34,22 @@ function App() {
     init();
   }, []);
 
-  useEffect(() => {
-    if (user) fetchTasks();
-  }, [user]);
+  // ✅ FIXED: fetchTasks wrapped in useCallback
+  const fetchTasks = useCallback(async () => {
+    if (!user) return;
 
-  const fetchTasks = async () => {
     const { data } = await supabase
       .from("tasks")
       .select("*")
       .eq("user_id", user.id);
 
     setTasks(data || []);
-  };
+  }, [user]);
+
+  // ✅ FIXED: proper dependency
+  useEffect(() => {
+    fetchTasks();
+  }, [fetchTasks]);
 
   const handleAddTask = async () => {
     if (!newTask.trim()) return;
@@ -57,7 +62,7 @@ function App() {
         user_id: user.id,
         priority,
         due_date: dueDate || null,
-        assignee_id: assignee || null // now just text
+        assignee_id: assignee || null
       }
     ]);
 
