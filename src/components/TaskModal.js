@@ -5,8 +5,7 @@ function TaskModal({ task, user, onClose }) {
   const [comments, setComments] = useState([]);
   const [newComment, setNewComment] = useState("");
 
-  // ✅ FIX: silence ESLint + keep behavior correct
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+
   useEffect(() => {
     fetchComments();
   }, [task.id]);
