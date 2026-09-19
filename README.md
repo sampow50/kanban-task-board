@@ -4,8 +4,6 @@ A responsive, full stack Kanban-style task board built with React and Supabase. 
 
 **[Live Demo](https://kanban-task-board-orpin.vercel.app)**
 
-![Kanban Task Board screenshot](./screenshot.png)
-
 <!-- Add a screenshot: save it as screenshot.png in the repo root, or delete the image line above. -->
 
 ## Features
