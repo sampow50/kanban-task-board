@@ -55,7 +55,7 @@ Open the local address shown in your terminal (usually `http://localhost:3000`).
 
 ## How It Works
 
-Each task belongs to one of three columns. The React app keeps the board in state, so creating, deleting, or dragging a task updates the affected columns immediately. Changes are saved to a Supabase PostgreSQL database, so the board looks the same when you come back to it.
+Each task belongs to one of four columns. The React app keeps the board in state, so creating, deleting, or dragging a task updates the affected columns immediately. Changes are saved to a Supabase PostgreSQL database, so the board looks the same when you come back to it.
 
 ## Project Structure
 
