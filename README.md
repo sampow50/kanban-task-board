@@ -9,19 +9,17 @@ A responsive, full stack Kanban-style task board built with React and Supabase. 
 ## Features
 
 - Create and delete tasks
-- Three columns: To Do, In Progress, and Done
-- Drag-and-drop task movement between columns
+- Four columns: To Do, In Progress, In Review, and Done
+- Drag-and-drop task movement between columns (including trash)
 - Instant updates with no page reloads, using React state
 - Persistent storage with Supabase (PostgreSQL)
 - Responsive layout
-- [If users can log in, add: User authentication with Supabase Auth]
 
 ## Tech Stack
 
 - **Frontend:** JavaScript, React
 - **Backend / Database:** Supabase (PostgreSQL)
 - **Hosting:** Vercel
-- [Add any other libraries you used, e.g. a drag-and-drop library. Check `package.json` for exact names.]
 
 ## Getting Started
 
