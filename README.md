@@ -69,9 +69,9 @@ kanban-task-board/
 
 ## Future Improvements
 
-- [Edit task titles and add descriptions]
-- [Due dates and task priorities]
-- [Multiple boards per user]
+- Edit task titles and add descriptions
+- Multiple boards per user
+- Assigning tasks to names
 
 ## Deployment
 
